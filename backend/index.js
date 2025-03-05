@@ -26,7 +26,7 @@ const dirpath = path.resolve();
 
 //connect to mongodb
 try {
-    mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    mongoose.connect(URI)
     console.log('Connected to MongoDB');
 } catch (error) {
     console.error("Error: ", error);
