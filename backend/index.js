@@ -7,10 +7,13 @@ import booksRouter from './route/book.route.js'
 import userRouter from './route/user.route.js'
 import path from "path"
 
-
+const coreoption = {
+    origin: "https://bookishworld.onrender.com",
+    credentials: true
+}
 const app = express()
 
-app.use(cors());
+app.use(cors(coreoption));
 
 app.use(express.json());
 

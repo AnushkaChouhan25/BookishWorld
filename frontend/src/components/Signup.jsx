@@ -19,7 +19,7 @@ function Signup() {
        
         const userInfo = { fullname: data.fullname, email: data.email, password: data.password };
 
-        await axios.post("/user/signup", userInfo).then((res) =>{
+        await axios.post("https://bookishworld.onrender.com/user/signup", userInfo).then((res) =>{
           console.log(res.data);
           if(res.data) { 
             toast.success('SignUp successfull!');
