@@ -1,24 +1,46 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from "react"; 
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 import Login from "./Login";
 import { useForm } from "react-hook-form" 
 
 function Signup() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location.state?.from || "/";
      const {
         register,
         handleSubmit, 
         formState: { errors },
       } = useForm();
     
-      const onSubmit = (data) => console.log(data)
-      
+      const onSubmit = async (data) => {
+       
+        const userInfo = { fullname: data.fullname, email: data.email, password: data.password };
+
+        await axios.post("http://localhost:4001/user/signup", userInfo).then((res) =>{
+          console.log(res.data);
+          if(res.data) { 
+            toast.success('SignUp successfull!');
+            navigate(from, {replace: true});
+          }
+          localStorage.setItem("Users", JSON.stringify(res.data.user));  
+
+        }).catch((error) => {
+          if(error.response) {
+            toast.error("Error: " + error.response.data.message);
+            console.log(error.response.data);
+          }
+        });
+      };
   return (
     <>
-      <div className="flex h-screen items-center justify-center">
+      <div className="flex h-screen items-center justify-center ">
         <div className="w-[600px]">
-          <div className="modal-box">
+          <div className="modal-box dark:bg-slate-900 dark:text-white">
             <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
-              <Link to="/" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              <Link to="/" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 x">
                 ✕
               </Link>
             <h3 className="font-bold text-lg">Signup</h3>
@@ -30,11 +52,11 @@ function Signup() {
                 name="text"
                 id="textid"
                 placeholder="Enter your FullName"
-                className="w-80 px-3 py-1 border rounded-md outline-none"
-                {...register("name", { required: true })}
+                className="w-80 px-3 py-1 border rounded-md outline-none dark:bg-slate-900 dark:text-white"
+                {...register("fullname", { required: true })}
               />
                <br />   
-             {errors.name && (
+             {errors.fullname && (
               <span className="text-sm text-red-500">This field is required</span>)}
             </div>
             {/* email */}
@@ -46,7 +68,7 @@ function Signup() {
                 name="email"
                 id="emailid"
                 placeholder="Enter your email"
-                className="w-80 px-3 py-1 border rounded-md outline-none"
+                className="w-80 px-3 py-1 border rounded-md outline-none dark:bg-slate-900 dark:text-white"
                 {...register("email", { required: true })}
               />
                <br />   
@@ -62,7 +84,7 @@ function Signup() {
                 name="password"
                 id="passwordid"
                 placeholder="Enter your password"
-                className="w-80 px-3 py-1 border rounded-md outline-none"
+                className="w-80 px-3 py-1 border rounded-md outline-none dark:bg-slate-900 dark:text-white"
                 {...register("password", { required: true })}
               />
                <br />   

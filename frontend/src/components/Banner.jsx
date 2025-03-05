@@ -28,7 +28,8 @@ function Banner() {
             </svg>
             <input type="text" className="grow text-gray-600" placeholder="Email your email to login" />
           </label>
-          <button className="btn btn-secondary mt-6">Secondary</button>
+          <button className="btn btn-secondary mt-6"
+           onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })}>Get Started</button>
           </div>
         </div>
 
