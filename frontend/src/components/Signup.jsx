@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Login from "./Login";
 import { useForm } from "react-hook-form" 
+import toast from 'react-hot-toast';
 
 function Signup() {
   const location = useLocation();
